@@ -1,0 +1,22 @@
+{
+  "name": "tech-intro-tutorial",
+  "version": "1.0.0",
+  "description": "Short tutorial to get familiar with some technologies during a night.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willeeklund/tech-intro-tutorial.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willeeklund/tech-intro-tutorial/issues"
+  },
+  "homepage": "https://github.com/willeeklund/tech-intro-tutorial#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
