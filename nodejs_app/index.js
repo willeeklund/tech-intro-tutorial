@@ -2,6 +2,9 @@ var path = require('path');
 var express = require('express');
 var app = express();
 
+// Serve static content
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Add Handlebars template engine
 var hbs = require('hbs');
 app.set('view engine', 'hbs');

@@ -27,7 +27,7 @@ Github has a graphical interface client for Git. Download [from their website](h
 Install and start the app. Create a [Github account](https://github.com/join) if you do not have one already.
 
 
-## Start coding
+## Start coding the backend
 
 #### Create your Node application
 Go to the folder where you want to store your code. Then run these commands.
@@ -62,6 +62,8 @@ To run the server you run this command:
 Now open [http://localhost:3000/](http://localhost:3000/) in your browser and marvel at
 your first Node.js page!
 
+Note: In the continued tutorial you need to restart the node server after each change to index.js.
+
 
 #### List of images
 Next create a new endpoint in the same file (index.js) by adding this content:
@@ -84,7 +86,6 @@ Next create a new endpoint in the same file (index.js) by adding this content:
 
 Now you can see a JSON list of animal images on [http://localhost:3000/animal_list_data](http://localhost:3000/animal_list_data).
 
-Note: In the continued tutorial you need to restart the node server after each change in index.js.
 
 #### Show list of images
 Add this code to index.js.
@@ -124,6 +125,19 @@ Create a folder named 'views' and in that create a file named 'index.hbs' with t
         {{/each}}
     </ul>
 
+Also add a file named 'layout.hbs' in the 'views' folder with this content.
+
+    <!DOCTYPE html>
+    <head>
+      <meta charset='utf-8'>
+      <title>Tech intro tutorial</title>
+      <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+    </head>
+    <body>
+      {{{ body }}}
+    </body>
+    </html>
+
 Update the '/' endpoint of index.js to this
 
     app.get('/', function (req, res) {
@@ -136,4 +150,42 @@ Update the '/' endpoint of index.js to this
 Visit [http://localhost:3000/](http://localhost:3000/) and you
 will see the same list of images, but this code will be much simpler to maintain.
 
+#### Prepare for frontend application
+We need to make some more changes before we can start building the frontend of our application.
+Add this to index.js to be able to serve static files.
+
+    app.use(express.static(path.join(__dirname, 'public')));
+
+Also create the folders and files we will need for our frontend application. This should
+be the resulting tree structure of your working folder.
+
+    nodejs_app/
+    ├── index.js
+    ├── public
+    │   └── assets
+    │       ├── css
+    │       │   └── main.css
+    │       └── js
+    │           └── app.js
+    └── views
+        ├── index.hbs
+        └── layout.hbs
+
+The last preparation is to add the loading of main.css and app.js in layout.hbs.
+In the <head> part add:
+
+    <link rel='stylesheet' type='text/css' href='/assets/css/main.css'>
+
+And after '{{{ body }}}' but before '</body>' add this:
+
+    <script src='//code.jquery.com/jquery-1.11.3.min.js'></script>
+    <script src='/assets/js/app.js'></script>
+
+This will first load the jQuery framework, and then add our own code, which depends on jQuery.
+
+
+## Start building the frontend
+
+#### jQuery image gallery
+We will show the animal images in an image gallery in the frontend of our web application.
 
