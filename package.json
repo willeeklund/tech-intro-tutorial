@@ -16,7 +16,16 @@
     "url": "https://github.com/willeeklund/tech-intro-tutorial/issues"
   },
   "homepage": "https://github.com/willeeklund/tech-intro-tutorial#readme",
+  "jshintConfig": {
+    "undef": true,
+    "unused": true,
+    "strict": false,
+    "predef": [
+      "require", "window", "console", "$", "jQuery", "__dirname"
+    ]
+  },
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "hbs": "^3.1.0"
   }
 }
