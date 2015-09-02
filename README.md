@@ -231,5 +231,54 @@ Now reload your browser at [http://localhost:3000/](http://localhost:3000/) and 
 are in a carousel!
 
 
-## Create the iOS application
-Open XCode and create a new project.
+## iOS application
+
+#### Create the iOS application
+Open XCode and create a new project. Choose 'Single-View Application' as the template.
+Call the project 'Tech-intro' and 'com.netlight' as organization identifier.
+The programming language we will use is Swift.
+
+#### Fetch JSON list of animal images
+Our iOS app will contain a table where we show the animal images.
+The first step is the fetch the JSON file from
+[http://localhost:3000/animal_list_data](http://localhost:3000/animal_list_data).
+
+Go to `ViewController.swift`. First att this property to the class where the class body begins.
+
+    var imageList = Array<String>()
+
+Then add this call in the end of `viewDidLoad()`.
+
+    self.fetchAnimalList()
+
+Then add that function to the class.
+
+    func fetchAnimalList() {
+        // Boilerplate stuff to make network request
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession(configuration: configuration);
+        let listURL = NSURL(string: "http://localhost:3000/animal_list_data")!
+        let request = NSURLRequest(URL: listURL)
+        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            if nil != error {
+                print("Something went wrong fetching data. \(error)")
+                return
+            }
+            // Parse response data as JSON and get the part we want
+            var JSONError: NSError?
+            if let responseDict = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: &JSONError) as? NSDictionary {
+                if nil != JSONError {
+                    print("Something went wrong parsing JSON data. \(JSONError)")
+                    return
+                }
+                if let animalsList = responseDict["animals"] as? Array<String> {
+                    // Save list of images
+                    self.imageList = animalsList
+                } else {
+                    print("JSON data has no 'animals' field. \(responseDict)")
+                }
+            }
+        })
+        task.resume()
+    }
+
