@@ -172,11 +172,11 @@ be the resulting tree structure of your working folder.
         └── layout.hbs
 
 The last preparation is to add the loading of `main.css` and `app.js` in `layout.hbs`.
-In the `&lt;head&gt;` part add:
+In the `<head>` part add:
 
     <link rel='stylesheet' type='text/css' href='/assets/css/main.css'>
 
-And after `{{{ body }}}` but before `&lt;/body&gt;` add this:
+And after `{{{ body }}}` but before `</body>` add this:
 
     <script src='//code.jquery.com/jquery-1.11.3.min.js'></script>
     <script src='/assets/js/app.js'></script>
@@ -201,7 +201,7 @@ Update `main.css` to contain this styling.
         float: right;
     }
 
-Change the list of images (the &lt;ul&gt; element) in `index.hbs` to this structure.
+Change the list of images (the <ul> element) in `index.hbs` to this structure.
 
     <div id="liquid">
         <span class="previous">&#9668;</span>
