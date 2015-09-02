@@ -1,7 +1,14 @@
 <h1>{{ headline }}</h1>
 This is a test template.
-<ul>
-    {{#each images}}
-        <li><img src="{{ this }}" width="400"></li>
-    {{/each}}
-</ul>
+
+<div id="liquid">
+    <span class="previous">&#9668;</span>
+    <div class="wrapper">
+        <ul>
+            {{#each images}}
+                <li><a href="#"><img src="{{ this }}" width="400" alt="image"/></a></li>
+            {{/each}}
+        </ul>
+    </div>
+    <span class="next">&#9658;</span>
+</div>

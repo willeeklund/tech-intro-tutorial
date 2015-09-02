@@ -189,3 +189,44 @@ This will first load the jQuery framework, and then add our own code, which depe
 #### jQuery image gallery
 We will show the animal images in an image gallery in the frontend of our web application.
 
+Update main.css to contain this styling.
+
+    .previous, .next {
+        font-size: 9em;
+    }
+    .previous {
+        float: left;
+    }
+    .next {
+        float: right;
+    }
+
+Change the list of images (the <ul> element) in index.hbs to this structure.
+
+    <div id="liquid">
+        <span class="previous">&#9668;</span>
+        <div class="wrapper">
+            <ul>
+                {{#each images}}
+                    <li><a href="#"><img src="{{ this }}" width="400" alt="image"/></a></li>
+                {{/each}}
+            </ul>
+        </div>
+        <span class="next">&#9658;</span>
+    </div>
+
+Add this script in layout.hbs, after we include jQuery, but before we load app.js.
+
+    <script src='http://www.nikolakis.net/liquidcarousel/js/jquery.liquidcarousel.pack.js'></script>
+
+Finally add this as the content of app.js.
+
+    jQuery(document).ready(function() {
+        jQuery('#liquid').liquidcarousel({
+            height: 300
+        });
+    });
+
+Now reload your browser at [http://localhost:3000/](http://localhost:3000/) and your images
+are in a carousel!
+
