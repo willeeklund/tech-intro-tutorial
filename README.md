@@ -201,7 +201,7 @@ Update `main.css` to contain this styling.
         float: right;
     }
 
-Change the list of images (the <ul> element) in `index.hbs` to this structure.
+Change the list of images (the `<ul>` element) in `index.hbs` to this structure.
 
     <div id="liquid">
         <span class="previous">&#9668;</span>
@@ -230,3 +230,6 @@ Finally add this as the content of `app.js`.
 Now reload your browser at [http://localhost:3000/](http://localhost:3000/) and your images
 are in a carousel!
 
+
+## Create the iOS application
+Open XCode and create a new project.
