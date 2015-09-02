@@ -44,7 +44,7 @@ Then run this from command line.
 This will install the module "Express" which is the web server we will use. Hbs is a
 template engine we will use.
 
-Create a new file named index.js with the following content:
+Create a new file named `index.js` with the following content:
 
     var express = require('express');
     var app = express();
@@ -62,11 +62,11 @@ To run the server you run this command:
 Now open [http://localhost:3000/](http://localhost:3000/) in your browser and marvel at
 your first Node.js page!
 
-Note: In the continued tutorial you need to restart the node server after each change to index.js.
+Note: In the continued tutorial you need to restart the node server after each change to `index.js`.
 
 
 #### List of images
-Next create a new endpoint in the same file (index.js) by adding this content:
+Next create a new endpoint in the same file (`index.js`) by adding this content:
 
     var list_of_animal_images = [
       'http://www.extremetech.com/wp-content/uploads/2013/09/4Vln8-640x428.jpg',
@@ -88,7 +88,7 @@ Now you can see a JSON list of animal images on [http://localhost:3000/animal_li
 
 
 #### Show list of images
-Add this code to index.js.
+Add this code to `index.js`.
 
     app.get('/simple_list_of_images', function (req, res) {
       var returnString = '<ul>';
@@ -109,13 +109,13 @@ To separate those two concepts we will install a template engine. Run this comma
 
     npm install hbs --save
 
-Now add these lines of code in the beginning of index.js (after the variable 'app' has been created).
+Now add these lines of code in the beginning of `index.js` (after the variable `app` has been created).
 
     var hbs = require('hbs');
     app.set('view engine', 'hbs');
     app.set('views', path.join(__dirname, '/views'));
 
-Create a folder named 'views' and in that create a file named 'index.hbs' with this content.
+Create a folder named `views` and in that create a file named `index.hbs` with this content.
 
     <h1>{{ headline }}</h1>
     This is a test template.
@@ -125,7 +125,7 @@ Create a folder named 'views' and in that create a file named 'index.hbs' with t
         {{/each}}
     </ul>
 
-Also add a file named 'layout.hbs' in the 'views' folder with this content.
+Also add a file named `layout.hbs` in the `views` folder with this content.
 
     <!DOCTYPE html>
     <head>
@@ -138,7 +138,7 @@ Also add a file named 'layout.hbs' in the 'views' folder with this content.
     </body>
     </html>
 
-Update the '/' endpoint of index.js to this
+Update the '/' endpoint of `index.js` to this
 
     app.get('/', function (req, res) {
       res.render('index', {
@@ -152,7 +152,7 @@ will see the same list of images, but this code will be much simpler to maintain
 
 #### Prepare for frontend application
 We need to make some more changes before we can start building the frontend of our application.
-Add this to 'index.js' to be able to serve static files.
+Add this to `index.js` to be able to serve static files.
 
     app.use(express.static(path.join(__dirname, 'public')));
 
@@ -171,12 +171,12 @@ be the resulting tree structure of your working folder.
         ├── index.hbs
         └── layout.hbs
 
-The last preparation is to add the loading of 'main.css' and 'app.js' in 'layout.hbs'.
-In the '&lt;head&gt;' part add:
+The last preparation is to add the loading of `main.css` and `app.js` in `layout.hbs`.
+In the `&lt;head&gt;` part add:
 
     <link rel='stylesheet' type='text/css' href='/assets/css/main.css'>
 
-And after '{{{ body }}}' but before '&lt;/body&gt;' add this:
+And after `{{{ body }}}` but before `&lt;/body&gt;` add this:
 
     <script src='//code.jquery.com/jquery-1.11.3.min.js'></script>
     <script src='/assets/js/app.js'></script>
@@ -189,7 +189,7 @@ This will first load the jQuery framework, and then add our own code, which depe
 #### jQuery image gallery
 We will show the animal images in an image gallery in the frontend of our web application.
 
-Update 'main.css' to contain this styling.
+Update `main.css` to contain this styling.
 
     .previous, .next {
         font-size: 9em;
@@ -201,7 +201,7 @@ Update 'main.css' to contain this styling.
         float: right;
     }
 
-Change the list of images (the &lt;ul&gt; element) in 'index.hbs' to this structure.
+Change the list of images (the &lt;ul&gt; element) in `index.hbs` to this structure.
 
     <div id="liquid">
         <span class="previous">&#9668;</span>
@@ -215,11 +215,11 @@ Change the list of images (the &lt;ul&gt; element) in 'index.hbs' to this struct
         <span class="next">&#9658;</span>
     </div>
 
-Add this script in 'layout.hbs', after we include jQuery, but before we load 'app.js'.
+Add this script in `layout.hbs`, after we include jQuery, but before we load `app.js`.
 
     <script src='http://www.nikolakis.net/liquidcarousel/js/jquery.liquidcarousel.pack.js'></script>
 
-Finally add this as the content of 'app.js'.
+Finally add this as the content of `app.js`.
 
     jQuery(document).ready(function() {
         jQuery('#liquid').liquidcarousel({
