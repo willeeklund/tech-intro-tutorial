@@ -8,13 +8,23 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var imageList = Array<String>()
-
+    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var tableview: UITableView!
+    var imageList = Array<String>() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableview.reloadData()
+            })
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.tableview.delegate = self
+        self.tableview.dataSource = self
         self.fetchAnimalList()
     }
 
@@ -44,12 +54,44 @@ class ViewController: UIViewController {
                 if let animalsList = responseDict["animals"] as? Array<String> {
                     // Save list of images
                     self.imageList = animalsList
+                    println("animalsList has \(animalsList.count) images")
                 } else {
                     print("JSON data has no 'animals' field. \(responseDict)")
                 }
             }
         })
         task.resume()
+    }
+    
+    // MARK: - Table view methods
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.imageList.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cellIdentifier = "tableCell"
+        var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
+        if nil == cell {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
+        }
+        let imagePath = self.imageList[indexPath.row]
+        cell?.textLabel?.text = "Image \(indexPath.row): \(imagePath)"
+        // Show the image, but load in background queue
+        let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+        dispatch_async(backgroundQueue) {
+            if let url = NSURL(string: imagePath) {
+                if let data = NSData(contentsOfURL: url) {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        // Update table cell in main queue
+                        cell?.textLabel?.text = "Image \(indexPath.row)"
+                        cell?.imageView?.image = UIImage(data: data)
+                        cell?.setNeedsDisplay()
+                        println("Got image \(indexPath.row)")
+                    })
+                }
+            }
+        }
+        return cell!
     }
 }
 

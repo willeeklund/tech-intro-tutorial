@@ -324,11 +324,90 @@ Next bring up the Assistant editor.
 
 ![Assistant editor](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/assistant_editor.png)
 
-Mark the Table view editor on the left, then Control-drag into the right side.
+Mark the Table view element on the left, then Control-drag it into the right side.
 Name the element `tableview`.
 
 ![Connect tableview](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/connect_tableview.png)
 
-Not do the same with the button element and name it `button`.
+Now do the same with the button element and name it `button`.
 These two elements are now connected as properties of the `ViewController` class.
+
+
+#### Show images in table list
+In `ViewController.swift`, update the class definition to this:
+
+    class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+These are two protocols that the class will conform to.
+
+They mean the class can both handle the events that concern a table view (as it's delegate)
+and it can provide the data to fill the table with content (data source).
+
+In `viewDidLoad()`, add assignment for the tableview responsibilities to the class
+before we call `fetchAnimalList()`.
+
+    self.tableview.delegate = self
+    self.tableview.dataSource = self
+
+Then add these methods to make it act as a data source.
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.imageList.count
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cellIdentifier = "animalImage"
+        var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
+        if nil == cell {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
+        }
+        let imagePath = self.imageList[indexPath.row]
+        cell?.textLabel?.text = "Image \(indexPath.row): \(imagePath)"
+        return cell!
+    }
+
+But if we run the application now the table will not be populated with image links because
+of a timing issue. At the time the length of imageList is read it will be zero,
+because the call to fetch the list has not finished yet. Change the definition of `imageList`
+to fix this.
+
+    var imageList = Array<String>() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableview.reloadData()
+            })
+        }
+    }
+
+
+Try to run the application again. Now it should do what we want.
+
+If you try to comment out the `dispatch_async` parts it will not work, because the call to
+reload the data is not applied on the main queue in the application. This is the only queue
+that will update the UI.
+
+
+#### Show image in table
+To show the image from the URL we need to load the content of that URL and present it as
+an image in out table view cell. Just before we return the cell in `cellForRowAtIndexPath`,
+add these lines.
+
+    // Show the image, but load in background queue
+    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+    dispatch_async(backgroundQueue) {
+        if let url = NSURL(string: imagePath) {
+            if let data = NSData(contentsOfURL: url) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    // Update table cell in main queue
+                    cell?.textLabel?.text = "Image \(indexPath.row)"
+                    cell?.imageView?.image = UIImage(data: data)
+                    cell?.setNeedsDisplay()
+                    println("Got image \(indexPath.row)")
+                })
+            }
+        }
+    }
+
+This will load the data in background and then update the cell. If the queue changing code
+is commented out it will all load on the main queue and the UI will freeze. Try it out!
 
