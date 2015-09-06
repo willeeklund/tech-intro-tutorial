@@ -26,6 +26,9 @@ This will install Git, the version control system.
 Github has a graphical interface client for Git. Download [from their website](https://desktop.github.com/).
 Install and start the app. Create a [Github account](https://github.com/join) if you do not have one already.
 
+Throughout the entire tutorial I recommend you to make a commit of the changes you made
+after a couple of sections. This will give you a good overview of all changes,
+one of many advantages of using version control.
 
 ## Start coding the backend
 
