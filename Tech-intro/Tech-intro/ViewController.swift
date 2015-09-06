@@ -93,5 +93,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         return cell!
     }
+    
+    // MARK: - Button action
+    @IBAction func buttonWasClicked(sender: UIButton) {
+        // Change button color
+        if nil == sender.backgroundColor {
+            sender.backgroundColor = UIColor.redColor()
+        } else {
+            sender.backgroundColor = nil
+        }
+    }
 }
-

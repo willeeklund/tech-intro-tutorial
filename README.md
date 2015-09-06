@@ -329,8 +329,7 @@ Name the element `tableview`.
 
 ![Connect tableview](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/connect_tableview.png)
 
-Now do the same with the button element and name it `button`.
-These two elements are now connected as properties of the `ViewController` class.
+The `tableview` element is now connected as a property of the `ViewController` class.
 
 
 #### Show images in table list
@@ -410,4 +409,27 @@ add these lines.
 
 This will load the data in background and then update the cell. If the queue changing code
 is commented out it will all load on the main queue and the UI will freeze. Try it out!
+
+
+#### Button click event
+In the frontend part we added a click event listener for a button. Now we will do the same
+in iOS. Bring up the Assistant editor again and Control-drag from the button in the
+storyboard into the class, but this time choose connection type 'Action' instead out 'Outlet'.
+name the action `buttonWasClicked` and choose the event type 'Touch Up Inside'. This is a
+regular 'Click'.
+
+![Connect button click](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/connect_button_click.png)
+
+Update the content of the new action method to this.
+
+    @IBAction func buttonWasClicked(sender: UIButton) {
+        // Change button color
+        if nil == sender.backgroundColor {
+            sender.backgroundColor = UIColor.redColor()
+        } else {
+            sender.backgroundColor = nil
+        }
+    }
+
+This will toggle a red background of the button when clicked.
 
