@@ -320,3 +320,15 @@ Select 'Reset to suggested constraints'.
 
 ![Resolve auto layout](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/storyboard2.png)
 
+Next bring up the Assistant editor.
+
+![Assistant editor](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/assistant_editor.png)
+
+Mark the Table view editor on the left, then Control-drag into the right side.
+Name the element `tableview`.
+
+![Connect tableview](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/connect_tableview.png)
+
+Not do the same with the button element and name it `button`.
+These two elements are now connected as properties of the `ViewController` class.
+
