@@ -294,6 +294,7 @@ Then add that function to the class.
                 if let animalsList = responseDict["animals"] as? Array<String> {
                     // Save list of images
                     self.imageList = animalsList
+                    print("animalsList = \(animalsList)")
                 } else {
                     print("JSON data has no 'animals' field. \(responseDict)")
                 }
@@ -302,4 +303,20 @@ Then add that function to the class.
         // This is when the request is actually started
         task.resume()
     }
+
+Now you can run the application and see the console log with the list of images.
+
+
+#### Connect UI elements
+
+Open the storyboard file (`Main.storyboard`) and show the Utilities section on the right.
+From the list of user interface elements, drag a Table view into the storyboard.
+
+![Drag Table view element](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/storyboard1.png)
+
+Also drag in a Button element. Then mark both the Table view and button (Command-click),
+then click the icon to resolve auto layout issues in the bottom right of the storyboard.
+Select 'Reset to suggested constraints'.
+
+![Resolve auto layout](https://raw.githubusercontent.com/willeeklund/tech-intro-tutorial/master/images/storyboard2.png)
 
