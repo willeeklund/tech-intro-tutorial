@@ -230,6 +230,26 @@ Finally add this as the content of `app.js`.
 Now reload your browser at [http://localhost:3000/](http://localhost:3000/) and your images
 are in a carousel!
 
+#### Event listener and Ajax calls
+Add a button element in `index.hbs`. Also add an empty list.
+
+    <button id="ourButton">Fetch from server</button>
+    <ul class="fetchedItems"></ul>
+
+Then in `app.js`, add event listener for the 'click' event on the button.
+When it is clicked, perform an Ajax call and add the list of images to this new list.
+
+    jQuery('#ourButton').on('click', function () {
+        jQuery.ajax({
+            url: '/animal_list_data'
+        }).done(function (data) {
+            console.log('fetched data', data.animals);
+            data.animals.forEach(function (item) {
+                jQuery('.fetchedItems').append('<li><img src="' + item + '" width="60" /></li>');
+            });
+        });
+    });
+
 
 ## iOS application
 
@@ -243,7 +263,7 @@ Our iOS app will contain a table where we show the animal images.
 The first step is the fetch the JSON file from
 [http://localhost:3000/animal_list_data](http://localhost:3000/animal_list_data).
 
-Go to `ViewController.swift`. First att this property to the class where the class body begins.
+Go to `ViewController.swift`. First add this property to the class where the class body begins.
 
     var imageList = Array<String>()
 
@@ -279,6 +299,7 @@ Then add that function to the class.
                 }
             }
         })
+        // This is when the request is actually started
         task.resume()
     }
 
