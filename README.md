@@ -114,6 +114,7 @@ To separate those two concepts we will install a template engine. Run this comma
 
 Now add these lines of code in the beginning of `index.js` (after the variable `app` has been created).
 
+    var path = require('path');
     var hbs = require('hbs');
     app.set('view engine', 'hbs');
     app.set('views', path.join(__dirname, '/views'));
